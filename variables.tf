@@ -16,38 +16,50 @@
 
 # For questions and contributions please contact info@iq3cloud.com
 
-variable "name" {
+variable "vnet_name" {
   type        = string
-  description = "The name of the resource group you are deploying"
+  description = "The name of the virtual network"
 }
 
-variable "location" {
-  type        = string
-  description = "The location of the resource group, defaults to west Europe"
-  default     = "westeurope"
+variable "rule_default_prefix" {
+  type = string
+  description = "The prefix to add to the NSG and ASG rules"
+  default = "iq3"
 }
 
-variable "customTag1" {
+variable "management_ip_range" {
   type        = string
-  description = "the first customTag"
+  description = "The IP range of the IQ3 management virtual network"
 }
 
-variable "customTag2" {
-  type        = string
-  description = "the second customTag"
+variable "vnet_ip_range" {
+  type        = list(string)
+  description = "The IP range of the whole Virtual Network"
 }
 
-variable "customTag3" {
+variable "vnet_resourcegroup" {
   type        = string
-  description = "the third customTag"
+  description = "The resource group where the virtual network and network security group will be located"
 }
 
-variable "customTag4" {
-  type        = string
-  description = "the fourth customTag"
+variable "dns_servers" {
+  type        = list(string)
+  description = "DNS servers to be configured for the virtual network (will be added along with the Azure Magic IP)"
 }
 
-variable "customTag5" {
+variable "vnet_subnet_ranges" {
+  type        = map(any)
+  description = "A map of subnet names and their ranges (key: Subnet Name, Value: Subnet Range). For examples reference the README"
+}
+
+variable "routetable_resource_id" {
   type        = string
-  description = "the fifth customTag"
+  default     = ""
+  description = "Resource Id of the route table to be attached to the subnets"
+}
+
+variable "virtual_network_tags" {
+  type        = map(any)
+  default     = null
+  description = "Tags to be applied to the virtual network"
 }
