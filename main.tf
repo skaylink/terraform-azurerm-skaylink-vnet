@@ -17,7 +17,7 @@
 # For questions and contributions please contact info@iq3cloud.com
 
 locals {
-  nsg_name            = "DefaultNSG"
+  nsg_name = "DefaultNSG"
 }
 
 resource "azurerm_network_security_group" "vnet_nsg" {

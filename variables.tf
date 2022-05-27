@@ -22,9 +22,9 @@ variable "vnet_name" {
 }
 
 variable "rule_default_prefix" {
-  type = string
+  type        = string
   description = "The prefix to add to the NSG and ASG rules"
-  default = "iq3"
+  default     = "iq3"
 }
 
 variable "management_ip_range" {
