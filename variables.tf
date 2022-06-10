@@ -52,9 +52,9 @@ variable "vnet_subnet_ranges" {
   description = "A map of subnet names and their ranges (key: Subnet Name, Value: Subnet Range). For examples reference the README"
 }
 
-variable "routetable_resource_id" {
+variable "route_table_id" {
   type        = string
-  default     = ""
+  default     = null
   description = "Resource Id of the route table to be attached to the subnets"
 }
 
