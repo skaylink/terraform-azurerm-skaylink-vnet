@@ -7,6 +7,7 @@ vnet_subnet_range = {
   "backend-subnet" = {
     "ip_range"                        = "10.10.10.0/24"
     "attach_nsg"                      = true
+    "attach_route_table"              = false
     "service_endpoints"               = null
     "apply_service_endpoint_policies" = true
     "apply_service_link_policies"     = false
@@ -17,6 +18,7 @@ vnet_subnet_range = {
   "databricks-host-subnet" = {
     "ip_range"                        = "10.10.11.0/24"
     "attach_nsg"                      = true
+    "attach_route_table"              = false
     "service_endpoints"               = null
     "apply_service_endpoint_policies" = false
     "apply_service_link_policies"     = false
@@ -78,7 +80,7 @@ No modules.
 |------|-------------|------|---------|:--------:|
 | <a name="input_dns_servers"></a> [dns\_servers](#input\_dns\_servers) | DNS servers to be configured for the virtual network (will be added along with the Azure Magic IP) | `list(string)` | n/a | yes |
 | <a name="input_management_ip_range"></a> [management\_ip\_range](#input\_management\_ip\_range) | The IP range of the IQ3 management virtual network | `string` | n/a | yes |
-| <a name="input_routetable_resource_id"></a> [routetable\_resource\_id](#input\_routetable\_resource\_id) | Resource Id of the route table to be attached to the subnets | `string` | `""` | no |
+| <a name="input_route_table_id"></a> [route\_table\_id](#input\_route\_table\_id) | Resource Id of the route table to be attached to the subnets | `string` | `null` | no |
 | <a name="input_rule_default_prefix"></a> [rule\_default\_prefix](#input\_rule\_default\_prefix) | The prefix to add to the NSG and ASG rules | `string` | `"iq3"` | no |
 | <a name="input_virtual_network_tags"></a> [virtual\_network\_tags](#input\_virtual\_network\_tags) | Tags to be applied to the virtual network | `map(any)` | `null` | no |
 | <a name="input_vnet_ip_range"></a> [vnet\_ip\_range](#input\_vnet\_ip\_range) | The IP range of the whole Virtual Network | `list(string)` | n/a | yes |

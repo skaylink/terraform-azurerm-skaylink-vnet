@@ -333,10 +333,10 @@ resource "azurerm_subnet_network_security_group_association" "nsg_association" {
 
 resource "azurerm_subnet_route_table_association" "rt_association" {
   subnet_id      = azurerm_subnet.subnet[each.key].id
-  route_table_id = var.routetable_resource_id
+  route_table_id = var.route_table_id
   for_each = {
     for key, value in var.vnet_subnet_ranges :
     key => value
-    if var.routetable_resource_id != ""
+    if value.attach_route_table
   }
 }
