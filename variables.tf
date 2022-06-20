@@ -44,7 +44,8 @@ variable "vnet_resourcegroup" {
 
 variable "dns_servers" {
   type        = list(string)
-  description = "DNS servers to be configured for the virtual network (will be added along with the Azure Magic IP)"
+  description = "DNS servers to be configured for the virtual network."
+  default     = null
 }
 
 variable "vnet_subnet_ranges" {
