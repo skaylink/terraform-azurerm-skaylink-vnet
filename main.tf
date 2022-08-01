@@ -302,7 +302,7 @@ resource "azurerm_subnet" "subnet" {
   resource_group_name                            = data.azurerm_resource_group.vnet_rg.name
   virtual_network_name                           = azurerm_virtual_network.vnet.name
   address_prefixes                               = [each.value.ip_range]
-  service_endpoints                              = try(each.value.service_endpoints, null) == null ? null : [each.value.service_endpoints]
+  service_endpoints                              = try(each.value.service_endpoints, null) == null ? null : each.value.service_endpoints
   enforce_private_link_endpoint_network_policies = each.value.apply_service_endpoint_policies
   enforce_private_link_service_network_policies  = each.value.apply_service_link_policies
 
