@@ -18,6 +18,7 @@
 
 locals {
   nsg_name = "DefaultNSG"
+  # bastion_name = "${var.vnet_name}-bas"
 }
 
 resource "azurerm_network_security_group" "vnet_nsg" {
@@ -292,9 +293,14 @@ resource "azurerm_virtual_network" "vnet" {
   address_space       = var.vnet_ip_range
   location            = data.azurerm_resource_group.vnet_rg.location
   resource_group_name = data.azurerm_resource_group.vnet_rg.name
-  dns_servers         = var.dns_servers == null || length(var.dns_servers) == 0 ? [] : var.dns_servers
 
   tags = var.virtual_network_tags
+}
+
+resource "azurerm_virtual_network_dns_servers" "dns" {
+  count              = var.dns_servers != null ? 1 : 0
+  virtual_network_id = azurerm_virtual_network.vnet.id
+  dns_servers        = var.dns_servers
 }
 
 resource "azurerm_subnet" "subnet" {
