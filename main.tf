@@ -18,6 +18,7 @@
 
 locals {
   nsg_name = "DefaultNSG"
+  # bastion_name = "${var.vnet_name}-bas"
 }
 
 resource "azurerm_network_security_group" "vnet_nsg" {
@@ -145,6 +146,7 @@ resource "azurerm_network_security_rule" "rdp_in_customer_new_zone" {
   destination_application_security_group_ids = [azurerm_application_security_group.windows_customer_access.id]
 }
 
+#tfsec:ignore:azure-network-no-public-ingress
 resource "azurerm_network_security_rule" "http_https_port_in_new_zone" {
   name                                       = "Http_Https_Port_In_newZone"
   priority                                   = 2012
@@ -173,6 +175,7 @@ resource "azurerm_network_security_rule" "mssql_port_in_new_zone" {
   destination_application_security_group_ids = [azurerm_application_security_group.sql_server.id]
 }
 
+#tfsec:ignore:azure-network-no-public-ingress
 resource "azurerm_network_security_rule" "allow_icmp_in" {
   name                        = "Allow_ICMP_IN"
   priority                    = 4095
@@ -187,6 +190,7 @@ resource "azurerm_network_security_rule" "allow_icmp_in" {
   network_security_group_name = azurerm_network_security_group.vnet_nsg.name
 }
 
+#tfsec:ignore:azure-network-no-public-egress
 resource "azurerm_network_security_rule" "allow_icmp" {
   name                        = "Allow_ICMP"
   priority                    = 4095
@@ -292,9 +296,14 @@ resource "azurerm_virtual_network" "vnet" {
   address_space       = var.vnet_ip_range
   location            = data.azurerm_resource_group.vnet_rg.location
   resource_group_name = data.azurerm_resource_group.vnet_rg.name
-  dns_servers         = var.dns_servers == null || length(var.dns_servers) == 0 ? [] : var.dns_servers
 
   tags = var.virtual_network_tags
+}
+
+resource "azurerm_virtual_network_dns_servers" "dns" {
+  count              = var.dns_servers != null ? 1 : 0
+  virtual_network_id = azurerm_virtual_network.vnet.id
+  dns_servers        = var.dns_servers
 }
 
 resource "azurerm_subnet" "subnet" {
