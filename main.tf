@@ -175,7 +175,7 @@ resource "azurerm_network_security_rule" "mssql_port_in_new_zone" {
   destination_application_security_group_ids = [azurerm_application_security_group.sql_server.id]
 }
 
-#tfsec:ignore:azure-network-no-public-ingress #tfsec:ignore:azure-network-no-public-egress
+#tfsec:ignore:azure-network-no-public-ingress
 resource "azurerm_network_security_rule" "allow_icmp_in" {
   name                        = "Allow_ICMP_IN"
   priority                    = 4095
@@ -190,6 +190,7 @@ resource "azurerm_network_security_rule" "allow_icmp_in" {
   network_security_group_name = azurerm_network_security_group.vnet_nsg.name
 }
 
+#tfsec:ignore:azure-network-no-public-egress
 resource "azurerm_network_security_rule" "allow_icmp" {
   name                        = "Allow_ICMP"
   priority                    = 4095
