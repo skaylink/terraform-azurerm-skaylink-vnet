@@ -6,8 +6,12 @@ resource "azurerm_subnet" "bastion_snt" {
   count                = var.bastion_subnet_range != null ? 1 : 0
   name                 = "AzureBastionSubnet"
   resource_group_name  = data.azurerm_resource_group.vnet_rg.name
-  virtual_network_name = data.azurerm_resource_group.vnet_rg.location
+  virtual_network_name = azurerm_virtual_network.vnet.name
   address_prefixes     = [var.bastion_subnet_range]
+
+  depends_on = [
+    azurerm_virtual_network.vnet
+  ]
 }
 
 resource "azurerm_public_ip" "bastion_ip" {
