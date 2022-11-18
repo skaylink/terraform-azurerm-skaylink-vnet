@@ -44,13 +44,32 @@ variable "vnet_resourcegroup" {
 
 variable "dns_servers" {
   type        = list(string)
-  description = "DNS servers to be configured for the virtual network."
+  description = <<EOF
+  (Optional) DNS servers to be configured for the virtual network. Leaving this value empty will use the default Azure DNS servers.
+  EOF
   default     = null
 }
 
 variable "vnet_subnet_ranges" {
   type        = map(any)
-  description = "A map of subnet names and their ranges (key: Subnet Name, Value: Subnet Range). For examples reference the README"
+  description = <<EOF
+  (Required) A map of subnet names and their ranges (key: Subnet Name, Value: Subnet Range)."
+  Provided in the following format:
+  ```terraform
+  vnet_subnet_range = {
+    # Subnet without service_delegation
+    "backend-subnet" = {
+      "ip_range"                        = "10.10.10.0/24"
+      "attach_nsg"                      = true
+      "attach_route_table"              = false
+      "service_endpoints"               = []
+      "apply_service_endpoint_policies" = true
+      "apply_service_link_policies"     = false
+      "service_delegation"              = null
+      "service_delegation_actions"      = []
+  }
+  ```
+  EOF
 }
 
 variable "route_table_id" {
@@ -62,5 +81,18 @@ variable "route_table_id" {
 variable "virtual_network_tags" {
   type        = map(any)
   default     = null
-  description = "Tags to be applied to the virtual network"
+  description = <<EOT
+  (Optional) A set of virtual network tags that will be applied to the virtual network.
+  Provided in key : value format
+  EOT
+}
+
+variable "bastion_subnet_range" {
+  type        = string
+  default     = null
+  description = <<EOT
+  (Optional) A Bastion subnet range.
+
+  NOTE: The IP range must be a /27 or larger.
+  EOT
 }
