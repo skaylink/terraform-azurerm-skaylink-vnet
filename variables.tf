@@ -93,6 +93,11 @@ variable "bastion_subnet_range" {
   description = <<EOT
   (Optional) A Bastion subnet range.
 
-  NOTE: The IP range must be a /27 or larger.
+  NOTE: The IP range must be a /26 or larger.
   EOT
+
+  validation {
+    condition     = can(regex("^([0-9]{1,3}\\.){3}[0-9]{1,3}(\\/([2][0-6]))?$", var.bastion_subnet_range))
+    error_message = "Err: subnet range has to be one of the following: /20, /21, /22, /23, /24, /25, /26"
+  }
 }
