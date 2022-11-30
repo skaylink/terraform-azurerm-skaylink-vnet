@@ -17,8 +17,8 @@
 # For questions and contributions please contact info@iq3cloud.com
 
 locals {
-  nsg_name = "DefaultNSG"
-  # bastion_name = "${var.vnet_name}-bas"
+  nsg_name     = "DefaultNSG"
+  bastion_name = "${var.vnet_name}-bas"
 }
 
 resource "azurerm_network_security_group" "vnet_nsg" {
