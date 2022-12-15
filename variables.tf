@@ -63,8 +63,8 @@ variable "vnet_subnet_ranges" {
       "attach_nsg"                                    = true
       "attach_route_table"                            = false
       "service_endpoints"                             = []
-      "apply_service_endpoint_policies"               = true
-      "apply_service_link_policies"                   = true
+      "private_endpoint_network_policies_enabled"     = true
+      "private_link_service_network_policies_enabled" = true
       "service_delegation"                            = null
       "service_delegation_actions"                    = []
   }

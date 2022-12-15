@@ -312,8 +312,8 @@ resource "azurerm_subnet" "subnet" {
   virtual_network_name                          = azurerm_virtual_network.vnet.name
   address_prefixes                              = [each.value.ip_range]
   service_endpoints                             = try(each.value.service_endpoints, null) == null ? null : each.value.service_endpoints
-  private_endpoint_network_policies_enabled     = each.value.apply_service_endpoint_policies
-  private_link_service_network_policies_enabled = each.value.apply_service_link_policies
+  private_endpoint_network_policies_enabled     = each.value.private_endpoint_network_policies_enabled
+  private_link_service_network_policies_enabled = each.value.private_link_service_network_policies_enabled
 
   dynamic "delegation" {
     for_each = each.value.service_delegation[*]
