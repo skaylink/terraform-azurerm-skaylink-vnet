@@ -98,7 +98,7 @@ resource "azurerm_network_security_rule" "ssh_rdp_in_management" {
   protocol                    = "*"
   source_port_range           = "*"
   destination_port_ranges     = ["22", "3389"]
-  source_address_prefix       = var.management_ip_range
+  source_address_prefixes     = var.management_ip_range
   destination_address_prefix  = "VirtualNetwork"
   resource_group_name         = data.azurerm_resource_group.vnet_rg.name
   network_security_group_name = azurerm_network_security_group.vnet_nsg.name

@@ -28,8 +28,8 @@ variable "rule_default_prefix" {
 }
 
 variable "management_ip_range" {
-  type        = string
-  description = "The IP range of the IQ3 management virtual network"
+  type        = list(string)
+  description = "The IP range(s) of the IQ3 management virtual network"
 }
 
 variable "vnet_ip_range" {
