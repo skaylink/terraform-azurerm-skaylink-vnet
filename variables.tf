@@ -51,14 +51,24 @@ variable "dns_servers" {
 }
 
 variable "vnet_subnet_ranges" {
-  type        = map(any)
+  type = list(object({
+    name                            = string,
+    ip_range                        = string,
+    attach_nsg                      = bool,
+    attach_route_table              = bool,
+    service_endpoints               = list(string),
+    apply_service_endpoint_policies = bool,
+    apply_service_link_policies     = bool,
+    service_delegation              = string,
+    service_delegation_actions      = list(string)
+  }))
   description = <<EOF
   (Required) A map of subnet names and their ranges (key: Subnet Name, Value: Subnet Range)."
   Provided in the following format:
   ```terraform
-  vnet_subnet_range = {
+  vnet_subnet_range = [
     # Subnet without service_delegation
-    "backend-subnet" = {
+    {
       "ip_range"                        = "10.10.10.0/24"
       "attach_nsg"                      = true
       "attach_route_table"              = false
@@ -67,7 +77,19 @@ variable "vnet_subnet_ranges" {
       "apply_service_link_policies"     = false
       "service_delegation"              = null
       "service_delegation_actions"      = []
-  }
+      },
+      {
+      "name"                            = "my-awesome-subnet-2"
+      "ip_range"                        = "10.10.10.0/24"
+      "attach_nsg"                      = true
+      "attach_route_table"              = false
+      "service_endpoints"               = []
+      "apply_service_endpoint_policies" = true
+      "apply_service_link_policies"     = false
+      "service_delegation"              = null
+      "service_delegation_actions"      = []
+      }
+  ]
   ```
   EOF
 }

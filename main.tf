@@ -307,26 +307,25 @@ resource "azurerm_virtual_network_dns_servers" "dns" {
 }
 
 resource "azurerm_subnet" "subnet" {
-  name                                           = each.key
+  count                                          = length(var.vnet_subnet_ranges)
+  name                                           = var.vnet_subnet_ranges[count.index].name
   resource_group_name                            = data.azurerm_resource_group.vnet_rg.name
   virtual_network_name                           = azurerm_virtual_network.vnet.name
-  address_prefixes                               = [each.value.ip_range]
-  service_endpoints                              = try(each.value.service_endpoints, null) == null ? null : each.value.service_endpoints
-  enforce_private_link_endpoint_network_policies = each.value.apply_service_endpoint_policies
-  enforce_private_link_service_network_policies  = each.value.apply_service_link_policies
+  address_prefixes                               = var.vnet_subnet_ranges[count.index].ip_range
+  service_endpoints                              = try(var.vnet_subnet_ranges[count.index].service_endpoints, null) == null ? null : var.vnet_subnet_ranges[count.index].service_endpoints
+  enforce_private_link_endpoint_network_policies = var.vnet_subnet_ranges[count.index].apply_service_endpoint_policies
+  enforce_private_link_service_network_policies  = var.vnet_subnet_ranges[count.index].apply_service_link_policies
 
   dynamic "delegation" {
-    for_each = each.value.service_delegation[*]
+    for_each = var.vnet_subnet_ranges[count.index].service_delegation[*]
     content {
       name = "delegation"
       service_delegation {
-        name    = each.value.service_delegation
-        actions = each.value.service_delegation_actions
+        name    = var.vnet_subnet_ranges[count.index].service_delegation
+        actions = var.vnet_subnet_ranges[count.index].service_delegation_actions
       }
     }
   }
-
-  for_each = var.vnet_subnet_ranges
 }
 
 resource "azurerm_subnet_network_security_group_association" "nsg_association" {
