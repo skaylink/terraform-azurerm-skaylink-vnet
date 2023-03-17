@@ -59,14 +59,14 @@ variable "vnet_subnet_ranges" {
   vnet_subnet_range = {
     # Subnet without service_delegation
     "backend-subnet" = {
-      "ip_range"                        = "10.10.10.0/24"
-      "attach_nsg"                      = true
-      "attach_route_table"              = false
-      "service_endpoints"               = []
-      "apply_service_endpoint_policies" = true
-      "apply_service_link_policies"     = false
-      "service_delegation"              = null
-      "service_delegation_actions"      = []
+      "ip_range"                                      = "10.10.10.0/24"
+      "attach_nsg"                                    = true
+      "attach_route_table"                            = false
+      "service_endpoints"                             = []
+      "private_endpoint_network_policies_enabled"     = true
+      "private_link_service_network_policies_enabled" = true
+      "service_delegation"                            = null
+      "service_delegation_actions"                    = []
   }
   ```
   EOF
