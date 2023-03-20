@@ -6,25 +6,25 @@
 vnet_subnet_range = {
   # Subnet without service_delegation
   "backend-subnet" = {
-    "ip_range"                        = "10.10.10.0/24"
-    "attach_nsg"                      = true
-    "attach_route_table"              = false
-    "service_endpoints"               = []
-    "apply_service_endpoint_policies" = true
-    "apply_service_link_policies"     = false
-    "service_delegation"              = null
-    "service_delegation_actions"      = []
+    "ip_range"                                      = "10.10.10.0/24"
+    "attach_nsg"                                    = true
+    "attach_route_table"                            = false
+    "service_endpoints"                             = []
+    "private_endpoint_network_policies_enabled"     = true
+    "private_link_service_network_policies_enabled" = true
+    "service_delegation"                            = null
+    "service_delegation_actions"                    = []
   }
   # Subnet with service_delegation
   "databricks-host-subnet" = {
-    "ip_range"                        = "10.10.11.0/24"
-    "attach_nsg"                      = true
-    "attach_route_table"              = false
-    "service_endpoints"               = ["Microsoft.Storage", "Microsoft.Sql", "Microsoft.KeyVault"]
-    "apply_service_endpoint_policies" = false
-    "apply_service_link_policies"     = false
-    "service_delegation"              = "Microsoft.Databricks/workspaces",
-    "service_delegation_actions"      = ["Microsoft.Network/virtualNetworks/subnets/join/action", "Microsoft.Network/virtualNetworks/subnets/prepareNetworkPolicies/action", "Microsoft.Network/virtualNetworks/subnets/unprepareNetworkPolicies/action", ]
+    "ip_range"                                      = "10.10.11.0/24"
+    "attach_nsg"                                    = true
+    "attach_route_table"                            = false
+    "service_endpoints"                             = ["Microsoft.Storage", "Microsoft.Sql", "Microsoft.KeyVault"]
+    "private_endpoint_network_policies_enabled"     = true
+    "private_link_service_network_policies_enabled" = true
+    "service_delegation"                            = "Microsoft.Databricks/workspaces",
+    "service_delegation_actions"                    = ["Microsoft.Network/virtualNetworks/subnets/join/action", "Microsoft.Network/virtualNetworks/subnets/prepareNetworkPolicies/action", "Microsoft.Network/virtualNetworks/subnets/unprepareNetworkPolicies/action", ]
   }
 }
 ```
