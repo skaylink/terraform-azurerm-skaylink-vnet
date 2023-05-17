@@ -103,3 +103,8 @@ variable "bastion_subnet_range" {
     error_message = "Err: subnet range has to be one of the following: /20, /21, /22, /23, /24, /25, /26"
   }
 }
+
+variable "location" {
+  type = string
+  description = "Location where the virtual network will be deployed"
+}

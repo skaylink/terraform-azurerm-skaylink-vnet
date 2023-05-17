@@ -5,7 +5,7 @@
 resource "azurerm_subnet" "bastion_snt" {
   count                = var.bastion_subnet_range != null ? 1 : 0
   name                 = "AzureBastionSubnet"
-  resource_group_name  = data.azurerm_resource_group.vnet_rg.name
+  resource_group_name  = var.vnet_resourcegroup
   virtual_network_name = azurerm_virtual_network.vnet.name
   address_prefixes     = [var.bastion_subnet_range]
 
@@ -17,8 +17,8 @@ resource "azurerm_subnet" "bastion_snt" {
 resource "azurerm_public_ip" "bastion_ip" {
   count               = var.bastion_subnet_range != null ? 1 : 0
   name                = "${local.bastion_name}-ip"
-  location            = data.azurerm_resource_group.vnet_rg.location
-  resource_group_name = data.azurerm_resource_group.vnet_rg.name
+  location            = var.location
+  resource_group_name = var.vnet_resourcegroup
   allocation_method   = "Static"
   sku                 = "Standard"
   domain_name_label   = local.bastion_name
@@ -27,8 +27,8 @@ resource "azurerm_public_ip" "bastion_ip" {
 resource "azurerm_bastion_host" "bastion_host" {
   count               = var.bastion_subnet_range != null ? 1 : 0
   name                = local.bastion_name
-  location            = data.azurerm_resource_group.vnet_rg.location
-  resource_group_name = data.azurerm_resource_group.vnet_rg.name
+  location            = var.location
+  resource_group_name = var.vnet_resourcegroup
 
   ip_configuration {
     name                 = "configuration"
