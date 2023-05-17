@@ -105,6 +105,6 @@ variable "bastion_subnet_range" {
 }
 
 variable "location" {
-  type = string
+  type        = string
   description = "Location where the virtual network will be deployed"
 }
