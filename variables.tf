@@ -37,7 +37,7 @@ variable "vnet_ip_range" {
   description = "The IP range of the whole Virtual Network"
 }
 
-variable "vnet_resourcegroup" {
+variable "resource_group_name" {
   type        = string
   description = "The resource group where the virtual network and network security group will be located"
 }
@@ -102,4 +102,9 @@ variable "bastion_subnet_range" {
     can(regex("^([0-9]{1,3}\\.){3}[0-9]{1,3}(\\/([2][0-6]))?$", var.bastion_subnet_range)))
     error_message = "Err: subnet range has to be one of the following: /20, /21, /22, /23, /24, /25, /26"
   }
+}
+
+variable "location" {
+  type        = string
+  description = "Location where the virtual network and related resources will be provisioned"
 }
