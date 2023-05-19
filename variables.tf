@@ -37,7 +37,7 @@ variable "vnet_ip_range" {
   description = "The IP range of the whole Virtual Network"
 }
 
-variable "vnet_resourcegroup" {
+variable "resource_group_name" {
   type        = string
   description = "The resource group where the virtual network and network security group will be located"
 }
@@ -106,5 +106,5 @@ variable "bastion_subnet_range" {
 
 variable "location" {
   type        = string
-  description = "Location where the virtual network will be deployed"
+  description = "Location where the virtual network and related resources will be provisioned"
 }
